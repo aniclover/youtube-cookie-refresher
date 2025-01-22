@@ -56,7 +56,7 @@ async fn main() -> Result<Infallible> {
         .spawn()?;
 
     let webdriver_client = loop {
-        match ClientBuilder::native()
+        match ClientBuilder::rustls()?
             .capabilities(serde_json::from_str(r#"{"goog:chromeOptions":{"args":["--disable-blink-features=AutomationControlled"]}}"#)?)
             .connect(&format!("http://127.0.0.1:{}", chromedriver_port)).await {
             Err(e   ) => {
